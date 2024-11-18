@@ -10,7 +10,6 @@ const people = [
   { id: 3, name: "Carol White", image: "https://i.pravatar.cc/150?img=3" },
   { id: 4, name: "David Brown", image: "https://i.pravatar.cc/150?img=4" },
   { id: 5, name: "Eve Wilson", image: "https://i.pravatar.cc/150?img=5" },
-  { id: 6, name: "Frank Davis", image: "https://i.pravatar.cc/150?img=6" },
 ];
 
 const Index = () => {

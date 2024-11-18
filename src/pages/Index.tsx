@@ -18,24 +18,20 @@ const people = [
 ];
 
 const Index = () => {
-  const [selectedPeople, setSelectedPeople] = useState<typeof people>([]);
-  const [winner, setWinner] = useState<typeof people[0] | null>(null);
+  const [winners, setWinners] = useState<typeof people>([]);
   const [isSelecting, setIsSelecting] = useState(false);
 
-  const selectRandomPeople = () => {
+  const selectWinners = () => {
     setIsSelecting(true);
-    
-    // Shuffle array and get first 5 people
-    const shuffled = [...people].sort(() => Math.random() - 0.5);
-    const selected = shuffled.slice(0, 5);
-    setSelectedPeople(selected);
     
     // Simulate selection process with multiple steps
     let iterations = 0;
     const maxIterations = 20;
     const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * selected.length);
-      setWinner(selected[randomIndex]);
+      // Shuffle array and get first 5 people
+      const shuffled = [...people].sort(() => Math.random() - 0.5);
+      const selected = shuffled.slice(0, 5);
+      setWinners(selected);
       iterations++;
       
       if (iterations >= maxIterations) {
@@ -50,31 +46,31 @@ const Index = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
-            Random Person Selector
+            Random Winners Selector
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Click the button to randomly select 5 people and pick a winner
+            Click the button to randomly select top 5 winners
           </p>
           <Button
-            onClick={selectRandomPeople}
+            onClick={selectWinners}
             disabled={isSelecting}
             className={`px-8 py-6 text-lg bg-[#9b87f5] hover:bg-[#8b76f4] transition-all duration-300 ${
               isSelecting ? "animate-pulse" : ""
             }`}
           >
-            {isSelecting ? "Selecting..." : "Pick Random Winner"}
+            {isSelecting ? "Selecting..." : "Pick Top 5 Winners"}
           </Button>
         </div>
 
-        {winner && <WinnerDisplay winner={winner} isSelecting={isSelecting} />}
+        {winners.length > 0 && <WinnerDisplay winners={winners} isSelecting={isSelecting} />}
 
         <div className="mt-16">
           <h2 className="text-2xl font-semibold text-gray-900 mb-8">
-            Selected Participants
+            All Participants
           </h2>
           <PeopleGrid 
-            people={selectedPeople.length > 0 ? selectedPeople : people} 
-            selectedId={winner?.id} 
+            people={people}
+            selectedId={winners.length > 0 ? winners[0].id : undefined}
           />
         </div>
       </div>
